@@ -1,0 +1,12 @@
+.report-match-result .player-name {
+    width: 150px;
+    display: inline-block;
+    text-align: left;
+}
+.report-match-result .player-score {
+    width: 100%;
+    text-align: center;
+}
+.report-match-result .btn {
+    font-size: 13pt;
+}

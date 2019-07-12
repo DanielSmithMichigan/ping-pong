@@ -1,0 +1,18 @@
+{
+  "name": "ping-ping-elo-tracking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.432.0",
+    "claudia-api-builder": "^4.1.2",
+    "create-react-app": "^2.1.8",
+    "lodash": "^4.17.11",
+    "node-uuid": "^1.4.8"
+  }
+}

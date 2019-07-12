@@ -1,0 +1,50 @@
+
+
+.match-page {
+    background-color: #1e244c;
+}
+
+.player-league.master {
+    color: #8089d2;
+}
+
+.player-league.rising-star {
+    color: #fff500;
+}
+
+.btn-container {
+    text-align: center;
+    width: 100%;
+}
+
+.match-stats {
+    text-align: center;
+    width: 100%;
+}
+
+.match-stats table {
+    display: inline-block;
+    margin-top: 18px;
+}
+
+.match-stats td {
+    background-color: #28305a;
+    color: white;
+    font-weight: bold;
+    font-size: 9pt;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    width: 30px;
+}
+
+.match-stats .player-title {
+    color: #e31c59;
+}
+
+.match-stats td.win {
+    color: #00994e;
+}
+
+.back-to-homepage {
+    margin-top: 8px;
+}

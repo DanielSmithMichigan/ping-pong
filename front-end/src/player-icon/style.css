@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'Zoologic';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Zoologic'),
+         local('Zoologic-Regular'),
+         url('../shared/zoologic.ttf') format('truetype');
+  }
+
+.player-icon {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width: 47px;
+    height: 47px;
+    border-radius: 47px;
+    overflow: hidden;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.player-icon-symbol {
+    width:47px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    font-size: 25pt;
+    position: relative;
+    font-family: "Zoologic";
+    bottom: 27px;
+}

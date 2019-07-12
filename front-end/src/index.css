@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root, .expand-all {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background-color: #1e244c;
+}
+
+.foreground {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.foreground .title {
+    color: white;
+    font-size: 20pt;
+    font-family: tahoma;
+    font-weight: bold;
+}
+
+.foreground .btn.add-player
+,.foreground .btn.begin-match
+,.foreground .btn.league-history
+,.foreground .btn.page-link {
+    margin-top: 20px;
+}
+
+.content {
+    min-height: 400px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.btn.btn-red {
+    background-color: #ff397f;
+}
+
+.btn.btn-rounded {
+    border-radius: 50px;
+}
+
+.btn {
+    border: 0px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14pt;
+    color: white;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+.btn.btn-small {
+    padding: 8px 12px;
+    font-size: 10pt;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.clear-both {
+    clear: both;
+}
+
+.overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.35);
+    text-align: center;
+    padding-top: 45%;
+    padding-bottom: 45%;
+}
+
+.modal {
+    width: 300px;
+    padding: 20px;
+    background-color: #eee;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.modal input {
+    background-color: #eee;
+    border-bottom: white;
+    border: 0px;
+    border-bottom: 1px solid black;
+    font-size: 11pt;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.submit-container {
+    width: 100%;
+    text-align: center;
+}
+
+.background-top {
+    background-image: url('./shared/background-top.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 100%;
+    height: 28%;
+    background-size: cover;
+}
+
+.background-bottom {
+    background-image: url('./shared/background-bottom.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 100%;
+    height: 26%;
+    clear: both;
+}
+

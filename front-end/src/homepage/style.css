@@ -1,0 +1,55 @@
+.message {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+.leaderboard {
+    text-align: center;
+    width: 100%;
+}
+
+.leaderboard table {
+    display: inline-block;
+    margin-top: 18px;
+}
+
+.leaderboard td {
+    background-color: #28305a;
+    color: white;
+    font-size: 9pt;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    width: 200px;
+}
+
+.leaderboard tr.selected td {
+    background-color: #5f6cb1;
+}
+
+.leaderboard td.skinny {
+    width: 50px;
+}
+
+.leaderboard th {
+    color: #e31c59;
+}
+
+.col-a {
+    width: 50%;
+}
+
+.create-player-input .input-label {
+    width: 150px;
+    display: inline-block;
+    text-align: left;
+}
+
+.create-player-input .input-value {
+    text-align: center;
+    width: 100%;
+}
+
+.create-player-input .btn {
+    font-size: 13pt;
+}
