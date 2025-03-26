@@ -39,9 +39,9 @@ export default function reducer(state = {}, action = {}) {
 
 export function addPlayer(playerObject) {
     return dispatch => {
-        return fetch("https://8q7xlufrm6.execute-api.us-east-1.amazonaws.com/latest/players/create", {
+        return fetch("https://8ov4gwqt52.execute-api.us-east-1.amazonaws.com/latest/players/create", {
             method: 'POST',
-            mode: 'no-cors',
+            // mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -61,9 +61,9 @@ export function addPlayer(playerObject) {
 
 export function getAllPlayers() {
     return (dispatch) => {
-        return fetch("https://8q7xlufrm6.execute-api.us-east-1.amazonaws.com/latest/players/getAll", {
+        return fetch("https://8ov4gwqt52.execute-api.us-east-1.amazonaws.com/latest/players/getAll", {
             method: 'GET',
-            mode: 'no-cors',
+            // mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             }
