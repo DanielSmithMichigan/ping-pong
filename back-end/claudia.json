@@ -1,12 +1,11 @@
 {
   "lambda": {
-    "role": "claudia-test-executor",
-    "name": "claudia-test-2",
-    "region": "us-east-1",
-    "sharedRole": true
+    "role": "ping-pong-elo-tracking-executor",
+    "name": "ping-pong-elo-tracking",
+    "region": "us-east-1"
   },
   "api": {
-    "id": "8q7xlufrm6",
+    "id": "b4i0ooqf6g",
     "module": "app"
   }
 }

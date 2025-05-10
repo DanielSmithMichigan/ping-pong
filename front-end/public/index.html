@@ -23,10 +23,45 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Ping Pong ELO Tracker</title>
+    <style type="text/css">
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: auto;
+        min-height: 100%;
+        background:#d7cab8 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUAAADUxrTczrzUyrzUwrTcyrzUyrTMwrRyw8X/AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAydJREFUOI0VlL124zoMhPkKI4BQ7ePrbI1QomtGklNzZSk1Q8uuGf/k9S+3FQ+BmfmGMhEi5CS+gCm5FW2LLShgGH5MMSHmaBNCz2O4KobF9G+98sU5uorqsbPRU2jLDubir1Ta7rEW+5LDbx7S83C5ajS4dVCnSlHghHRA80NzrAfwoRftgVkW2Wh9wueoe/NN3PVaVLisCLs/n+ifvfPfZgsBzjVVIh2hEm2ek0hSk5VW4RgfqSmRNoq3/StzpLpDM2nuILQVe4cWWnRmGNoNrTaFaGrxa9893hoANprrFSM4LhLshnlVx9Xq96gmQil9XCySjgQ3h1YdKUaDU3gpgXgAU6J1/ls6q8Wa99WyxkQxDnnGWfsIwvldzB5pX9ae0Gr47BZP71mQRQ2qLIu1D/+kkL1TW0VRl0y6xEoK4fGFxCPQp7Uis85EanhXyYAbqbReh5rdyKEz7lolIUZlr8MOEnGMtAMbwlxCnQLsz9IuuNPBh90Ik+oXYlmxQ+vct13D0eVz6UwrbsMNVgMhQS66ONgdP02zyqWyHzIiukClJtBsloupQ0D3xAU08I22P7Qj7To1w5bWbbCijM5zKDaldJUHzOsMJLvsH6rVXBf/aV2UJ4MZC3rkdqoMceZE6BryZMbhv9uclk9CAWvvU4Jf+nlvfIFjnOq8jxaMFaV3A4bRlMhWIOv3GKPH4WxDTE1uxDSDFBucMDTBToQT6YTINRIONA12ahOqsHs6iYYpiqkt+BhD6ChXQpelQVe6WgYxCCEL+SiR8Vnk8mxaCRFPoyR31X6iB9fL1TTez/ADG2Yi3YJ836WvNYI26UcEtQxIuX+TOXxdZ05YH0+KXxl345FD7eDcBz8ttSCFeAuYvszWPqI0t4gptP5RT3Q81FGrOWmN/GfVGGT+25Q3kpHZ5mIyzu44nqMD2NYnlm4CHvq6XLSq/K0uBhsove7grkwXmH7pfjx/ZaodqLd8barW6JMhejaKMuStmkgFVwyXaaqgOHVNmjU7G2wKOLKlcDx+1R9AUkmnMHi8CEMtaxX8VrkZZ6HRzT24btjJmu4rNs4f/wMMAexu5PIhuAAAAABJRU5ErkJggg==);
+        font-family: "Playfair Display", serif;
+        font-optical-sizing: auto;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        pointer-events: none;
+        box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
+        z-index: 9999; /* or something very high, just below modals if any */
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+      @font-face {
+        font-family: 'NewspaperFont';
+        src: url('./FONT.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root" style="height: 100%; width: 100%;"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

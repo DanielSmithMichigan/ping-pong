@@ -112,17 +112,23 @@ api.get('/matches/getInformation/{playerOneId}/{playerTwoId}', function (request
         getPlayer(playerIds[1]),
         getMatchStatisticsAllowNull.apply(null, playerIds)
     ]).then((promiseValues) => {
-        promiseValues[0].expectedScore = calculateExpectedScore(promiseValues[0].elo, promiseValues[1].elo);
-        promiseValues[1].expectedScore = calculateExpectedScore(promiseValues[1].elo, promiseValues[0].elo);
-        promiseValues[0].expectedSetScore = calculateExpectedSetScore(promiseValues[0].elo, promiseValues[1].elo);
-        promiseValues[1].expectedSetScore = calculateExpectedSetScore(promiseValues[1].elo, promiseValues[0].elo);
-        output.matchStatistics = promiseValues[2];
-        output[promiseValues[0].id] = promiseValues[0];
-        output[promiseValues[1].id] = promiseValues[1];
+        const [playerOne, playerTwo, matchStats] = promiseValues;
+
+        playerOne.expectedScore = calculateExpectedScore(playerOne.elo, playerTwo.elo);
+        playerTwo.expectedScore = calculateExpectedScore(playerTwo.elo, playerOne.elo);
+
+        playerOne.expectedSetScore = calculateExpectedSetScore(playerOne.elo, playerTwo.elo);
+        playerTwo.expectedSetScore = calculateExpectedSetScore(playerTwo.elo, playerOne.elo);
+
+        playerOne.bo11WinProb = calculateBo11WinProb(playerOne.expectedScore);
+        playerTwo.bo11WinProb = calculateBo11WinProb(playerTwo.expectedScore);
+
+        output.matchStatistics = matchStats;
+        output[playerOne.id] = playerOne;
+        output[playerTwo.id] = playerTwo;
         return output;
     });
 });
-
 // Todo:
 // Use actual elo calculation
 // Update player statistics table entry
@@ -309,6 +315,28 @@ function calculateRatingAdjustment(elo, opponentElo, points, games) {
     let actualScore = points / games;
     // return _.round(config.kFactor * (actualScore - expectedScore) * games, config.ratingDecimals);
     return _.round(config.kFactor * (actualScore - expectedScore), config.ratingDecimals);
+}
+
+function calculateBo11WinProb(singleSetWinProb) {
+    let winProb = 0;
+    for (let wins = 6; wins <= 11; wins++) {
+        winProb += binomialProbability(wins, 11, singleSetWinProb);
+    }
+    return _.round(winProb, 4);
+}
+
+function binomialProbability(k, n, p) {
+    return combination(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+}
+
+function combination(n, k) {
+    if (k === 0 || k === n) return 1;
+    let numerator = 1, denominator = 1;
+    for (let i = 1; i <= k; i++) {
+        numerator *= (n - (i - 1));
+        denominator *= i;
+    }
+    return numerator / denominator;
 }
 
 module.exports = api;

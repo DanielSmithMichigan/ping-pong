@@ -1,74 +1,73 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './style.css';
 import CreatePlayerInput from './create-player-input.js';
 import PlayerTable from './player-table';
-import {
-    setPageAttribute
-} from './store.js';
-import {
-    gotoPage
-} from '../router.js';
-import {
-    getAllPlayers
-} from '../shared/player-store.js';
-
+import { setPageAttribute } from './store.js';
+import { gotoPage } from '../router.js';
+import { getAllPlayers } from '../shared/player-store.js';
 import _ from 'lodash';
 
 class Homepage extends Component {
     componentDidMount() {
         this.props.setPageAttribute("message", "Retrieving players");
-        this.props.getAllPlayers()
-            .then(() => {
-                this.props.setPageAttribute("message", "");
-            });
+        this.props.getAllPlayers().then(() => {
+            this.props.setPageAttribute("message", "");
+        });
     }
+
     render() {
         return (
-            <div className="homepage">
-                <div className="foreground">
-                    <div className="title">
-                        ELO Tracker
-                    </div>
-                    <div className="message">
-                        {this.props.message}
-                    </div>
-                    <div>
-                        {this.leagueHistoryButton()}
-                    </div>
-                    <CreatePlayerInput />
-                    <PlayerTable />
-                    {this.renderBeginMatchButton()}
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                fontFamily: 'Arial, sans-serif',
+                backgroundColor: '#f4f4f4',
+                height: '100vh',
+                padding: '20px'
+            }}>
+                <div style={{
+                    textAlign: 'center',
+                    fontSize: '32px',
+                    fontWeight: 'bold',
+                    marginBottom: '10px'
+                }}>
+                    PING PONG / ELO TRACKER
                 </div>
+                <div style={{ fontSize: '14px', marginBottom: '20px' }}>
+                    TRACK THE RANKINGS OF YOUR FRIENDS
+                </div>
+                <PlayerTable />
+                <CreatePlayerInput />
+                {this.renderBeginMatchButton()}
             </div>
         );
     }
-    leagueHistoryButton() {
-        return (
-            <button className="btn btn-red btn-rounded page-link"
-                onClick={this.props.gotoPage.bind(this, "league-history")}>
-                HISTORY
-            </button>
-        );
-    }
+
     renderBeginMatchButton() {
-        if (!this.props.playerOneId
-                || !this.props.playerTwoId) {
+        if (!this.props.playerOneId || !this.props.playerTwoId) {
             return null;
         }
         return (
-            <button className="btn btn-red btn-rounded page-link"
+            <button style={{
+                marginTop: '20px',
+                padding: '10px 20px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                backgroundColor: 'black',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer'
+            }}
                 onClick={this.beginMatch.bind(this)}>
-                BEGIN MATCH
+                CHALLENGE A FRIEND
             </button>
         );
     }
+
     beginMatch() {
         this.props.gotoPage("matchpage");
-    }
-    openCreatePlayerInput() {
-        this.props.setPageAttribute("create-player-input", "open");
-        this.props.setPageAttribute("message", "");
     }
 }
 
@@ -81,7 +80,7 @@ const mapStateToProps = state => {
     }
 }
 
-function sortByElo (players) {
+function sortByElo(players) {
     return _.chain(players)
         .orderBy("elo")
         .reverse()
@@ -97,4 +96,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Homepage)
+)(Homepage);

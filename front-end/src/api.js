@@ -28,7 +28,7 @@ export default function reducer(state = {}, action = {}) {
 
 export function reportMatch(result) {
     return dispatch => {
-        return fetch("https://8ov4gwqt52.execute-api.us-east-1.amazonaws.com/latest/matches/report", {
+        return fetch("https://b4i0ooqf6g.execute-api.us-east-1.amazonaws.com/latest/matches/report", {
             method: 'POST',
             // mode: 'no-cors',
             headers: {
@@ -54,7 +54,7 @@ export function reportMatch(result) {
 
 export function getMatchInformation(playerOneId, playerTwoId) {
     return dispatch => {
-        return fetch(`https://8ov4gwqt52.execute-api.us-east-1.amazonaws.com/latest/matches/getInformation/${playerOneId}/${playerTwoId}`, {
+        return fetch(`https://b4i0ooqf6g.execute-api.us-east-1.amazonaws.com/latest/matches/getInformation/${playerOneId}/${playerTwoId}`, {
             method: 'GET',
             // mode: 'no-cors',
             headers: {

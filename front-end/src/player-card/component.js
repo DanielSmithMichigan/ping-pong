@@ -60,7 +60,6 @@ function winPct(player) {
 
 const mapStateToProps = (state, ownProps) => {
     let playerId = _.get(state, `playerStore.player${ownProps.playerNum}Id`);
-    console.log(JSON.stringify(state, null, 4));
     return {
         playerId,
         player: _.find((state.playerStore || {}).allPlayers, {id: playerId}),

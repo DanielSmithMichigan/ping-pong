@@ -1,40 +1,33 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Homepage from './homepage/component.js';
-import Matchpage from './matchpage/component.js';
-import LeagueHistory from './league-history/component.js';
-import {resetStore} from './store-root';
+import React, { Component, useEffect, useState } from 'react';
+import _ from 'lodash';
+import Homepage from './Homepage';
+import Homepage2 from './Homepage2';
+import Match from './Match';
+import Match2 from './Match2';
 
-class App extends Component {
-    componentWillMount() {
-        this.props.resetStore();
-    }
-    render() {
-        return (
-            <React.Fragment>
-                <div className="background-top" />
-                <div className="content">
-                    {this.props.page === 'homepage' && <Homepage />}
-                    {this.props.page === 'matchpage' && <Matchpage />}
-                    {this.props.page === 'league-history' && <LeagueHistory />}
-                </div>
-                <div className="background-bottom" />
-            </React.Fragment>
-        );
-    }
+function App(props) {
+  const [firstSelectedPlayer, setFirstSelectedPlayer] = useState(null);
+  const [secondSelectedPlayer, setSecondSelectedPlayer] = useState(null);
+  const [selectedPage, setSelectedPage] = useState(null);
+  return (
+    selectedPage === "match" ? (
+      <Match2
+        setFirstSelectedPlayer={setFirstSelectedPlayer}
+        setSecondSelectedPlayer={setSecondSelectedPlayer}
+        firstSelectedPlayer={firstSelectedPlayer}
+        secondSelectedPlayer={secondSelectedPlayer}
+        setSelectedPage={setSelectedPage}
+      />
+    ) : (
+      <Homepage2
+        firstSelectedPlayer={firstSelectedPlayer}
+        secondSelectedPlayer={secondSelectedPlayer}
+        setFirstSelectedPlayer={setFirstSelectedPlayer}
+        setSecondSelectedPlayer={setSecondSelectedPlayer}
+        setSelectedPage={setSelectedPage}
+      />
+    )
+  );
 }
 
-const mapStateToProps = state => {
-    return {
-        page: (state.router || {}).page
-    }
-}
-
-const mapDispatchToProps = {
-    resetStore
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(App)
+export default App;
