@@ -1,10 +1,10 @@
 import React, { Component, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { resetStore } from './store-root';
 import {
     getAllPlayers,
-    selectPlayer,
-    clearSelectedPlayers
+    selectPlayer, // This might be related to how setFirst/SecondSelectedPlayer props are derived
+    clearSelectedPlayers, // This Redux action clears ALL selected players
+    addPlayer,
 } from './shared/player-store.js';
 import _ from 'lodash';
 import {
@@ -27,6 +27,111 @@ const getPlayerImage = (playerName) => {
   const imageIndex = index % randomImages.length;
   return randomImages[imageIndex];
 };
+
+// --- MODAL COMPONENT ---
+const modalOverlayStyle = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000,
+};
+
+const modalContentStyle = {
+  backgroundColor: '#fff',
+  padding: '30px',
+  borderRadius: '8px',
+  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+  minWidth: '300px',
+  maxWidth: 'calc(100% - 40px)', // Max width with some padding from screen edges
+  color: '#333', // Ensuring text is visible on white background
+  textAlign: 'left', // Align text to the left within the modal
+};
+
+const formInputStyle = {
+  width: 'calc(100% - 22px)', // Account for padding and border
+  padding: '10px',
+  margin: '10px 0 20px 0',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  fontSize: '16px',
+};
+
+const formButtonStyle = {
+  padding: '10px 20px',
+  fontSize: '16px',
+  cursor: 'pointer',
+  backgroundColor: '#007bff',
+  color: 'white',
+  border: 'none',
+  borderRadius: '4px',
+  marginRight: '10px',
+};
+
+const cancelButtonModalStyle = {
+  ...formButtonStyle,
+  backgroundColor: '#6c757d',
+};
+
+const CreatePlayerModal = ({ isOpen, onClose, addPlayer, getAllPlayers, setIsCreatePlayerModalOpen }) => {
+  const [playerNameInput, setPlayerNameInput] = useState('');
+
+  if (!isOpen) {
+    return null;
+  }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (playerNameInput.trim()) {
+      addPlayer({
+        name: playerNameInput.trim(),
+        elo: 2000
+      }).then(() => {
+        getAllPlayers();
+        setIsCreatePlayerModalOpen();
+      });
+      setPlayerNameInput(''); // Reset input after submit
+    }
+  };
+
+  return (
+    <div style={modalOverlayStyle} onClick={onClose}> {/* Close on overlay click */}
+      <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}> {/* Prevent closing when clicking content */}
+        <h2 style={{ marginTop: 0, marginBottom: '20px', textAlign: 'center' }}>Create Player</h2>
+        <form onSubmit={handleFormSubmit}>
+          <div>
+            <label htmlFor="player-name-input" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+              Player Name:
+            </label>            
+            <input
+              type="text"
+              id="player-name-input"
+              value={playerNameInput}
+              onChange={(e) => setPlayerNameInput(e.target.value)}
+              placeholder="Enter player name to create"
+              required
+              style={formInputStyle}
+            />
+          </div>
+          <div style={{ textAlign: 'right' }}> {/* Align buttons to the right */}
+            <button type="submit" style={formButtonStyle}>
+              Create
+            </button>
+            <button type="button" onClick={onClose} style={cancelButtonModalStyle}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 
 const PlayerRankingGrid = (props) => {
   const {
@@ -57,7 +162,7 @@ const PlayerRankingGrid = (props) => {
     }}>
       <div className="rankings-header" style={{
         display: "grid",
-        gridTemplateColumns: "10% 60% 30%", // Adjusted to include ELO column
+        gridTemplateColumns: "10% 60% 30%",
         borderBottom: "0.8vw solid black",
         padding: "1vw",
         fontWeight: "bolder",
@@ -108,7 +213,6 @@ const PlayerRankingGrid = (props) => {
               }} />
             </div>
             <div style={{
-              // fontFamily: 'NewspaperFont',
               paddingLeft: "10px",
               fontWeight: "900",
               letterSpacing: "-0.05em",
@@ -141,14 +245,22 @@ const PingPongLeague = (props) => {
     playersSortedByElo,
     firstSelectedPlayer,
     secondSelectedPlayer,
-    setFirstSelectedPlayer,
-    setSecondSelectedPlayer,
+    setFirstSelectedPlayer, // These props are assumed to be passed by the parent component
+    setSecondSelectedPlayer, // to manage selected player state.
     setSelectedPage,
+    addPlayer,
+    // clearSelectedPlayers // Redux action from mapDispatchToProps
   } = props;
 
+  const [isCreatePlayerModalOpen, setIsCreatePlayerModalOpen] = useState(false);
+
   useEffect(() => {
-    getAllPlayers()
-  }, []);
+    getAllPlayers();
+  }, [getAllPlayers]); // Added getAllPlayers to dependency array
+
+  const handleOpenClearPlayerModal = () => setIsCreatePlayerModalOpen(true);
+  const handleCloseCreatePlayerModal = () => setIsCreatePlayerModalOpen(false);
+
 
   return (
     <div style={{ padding: '40px' }}>
@@ -194,24 +306,52 @@ const PingPongLeague = (props) => {
         setSecondSelectedPlayer={setSecondSelectedPlayer}
       />
 
+
       <div style={{
         display: 'flex',
         justifyContent: 'center',
         width: '100%'
       }}>
-        <img src="/homepage2-03.svg" alt="Ping Pong League" style={{
+        <img src="/homepage2-03.svg" alt="VS - Go to Match" style={{
           width: '70%',
           height: 'auto',
           maxWidth: '100%',
-          marginTop: '2vw',
+          marginTop: '1vw', // Adjusted margin
           opacity: firstSelectedPlayer === null || secondSelectedPlayer === null ? 0.5 : 1,
-          cursor: 'pointer'
+          cursor: firstSelectedPlayer !== null && secondSelectedPlayer !== null ? 'pointer' : 'default'
         }} onClick={() => {
           if (firstSelectedPlayer !== null && secondSelectedPlayer !== null) {
-            props.setSelectedPage('match');
+            if (props.setSelectedPage) props.setSelectedPage('match');
           }
         }} />
       </div>
+      
+      {/* "Clear Player" Button */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4vw', marginBottom: '1vw' }}>
+        <button
+          onClick={handleOpenClearPlayerModal}
+          style={{
+            padding: '10px 20px',
+            fontSize: '4rem', // Responsive font size
+            cursor: 'pointer',
+            backgroundColor: 'transparent', // A neutral color
+            border: '4px solid black',
+            fontWeight: 'bold',
+            color: '#333'
+          }}
+        >
+          Create Player
+        </button>
+      </div>
+
+      {/* Modal for Clearing Player */}
+      <CreatePlayerModal
+        isOpen={isCreatePlayerModalOpen}
+        onClose={handleCloseCreatePlayerModal}
+        addPlayer={addPlayer}
+        getAllPlayers={getAllPlayers}
+        setIsCreatePlayerModalOpen={setIsCreatePlayerModalOpen}
+      />
     </div>
   );
 };
@@ -226,14 +366,22 @@ function sortByElo(players) {
 const mapStateToProps = state => {
   return {
     playersSortedByElo: sortByElo((state.playerStore || {}).allPlayers || []),
-    page: (state.router || {}).page
+    page: (state.router || {}).page,
+    // firstSelectedPlayer and secondSelectedPlayer are NOT mapped from Redux state here.
+    // This implies they are managed by a parent component or local state higher up,
+    // and setFirstSelectedPlayer/setSecondSelectedPlayer are passed as props.
   }
 }
 
+// The existing mapDispatchToProps already includes clearSelectedPlayers,
+// which likely clears *all* selected players.
+// The new functionality to clear a *specific* player relies on
+// setFirstSelectedPlayer/setSecondSelectedPlayer props.
 const mapDispatchToProps = {
   getAllPlayers,
   selectPlayer,
-  clearSelectedPlayers
+  clearSelectedPlayers,
+  addPlayer,
 };
 
 export default connect(

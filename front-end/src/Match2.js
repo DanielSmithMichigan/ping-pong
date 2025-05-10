@@ -74,6 +74,11 @@ const Match = ({
   const [playerTwoScore, setPlayerTwoScore] = useState(false);
 
   useEffect(() => {
+    // Scroll to the top of the page when the component loads
+    window.scrollTo(0, 0);
+  }, []); // Empty dependency array means this runs once on mount
+
+  useEffect(() => {
     clearMatchInformation().then(() => getMatchInformation(firstSelectedPlayer, secondSelectedPlayer));
   }, [firstSelectedPlayer, secondSelectedPlayer, clearMatchInformation, getMatchInformation]);
 
